@@ -5,6 +5,7 @@ A modular and extensible WhatsApp bot built with Node.js and whatsapp-web.js. Th
 ## Features
 
 - 🤖 **AI Chat Assistant**: Get AI-powered responses using the `@ai` command
+- 👥 **@everyone Group Mention**: Mention all group members at once with the `@everyone` command
 - 🔧 **Modular Architecture**: Easy to add new commands and features
 - 📝 **Clean Code Structure**: Well-organized, maintainable codebase
 - 🔐 **Secure Authentication**: Uses LocalAuth for persistent sessions
@@ -46,6 +47,7 @@ npm start
 ### Available Commands
 
 - `@ai <question>` - Ask the AI assistant a question about the chat context
+- `@everyone <message>` - Mention all group members at once with an optional custom message
 
 ### Example Usage
 
@@ -53,7 +55,12 @@ npm start
 @ai What's the main topic of discussion in this group?
 @ai Summarize the last 10 messages
 @ai Who has been most active in the chat today?
+
+@everyone Please read the pinned message!
+@everyone
 ```
+
+- When you use `@everyone`, the bot will mention all group members in a single message (or in batches for large groups), without showing their numbers in the message text. This is less spammy and notifies everyone cleanly.
 
 ## Project Structure
 
@@ -61,6 +68,7 @@ npm start
 src/
 ├── commands/           # Command handlers
 │   ├── aiCommand.js    # AI command implementation
+│   ├── everyoneCommand.js # @everyone group mention command
 │   └── commandManager.js # Command routing and management
 ├── services/           # Business logic services
 │   ├── openaiService.js # OpenAI API integration
@@ -93,6 +101,7 @@ module.exports = MyNewCommand;
 ```javascript
 const COMMANDS = {
     AI: '@ai',
+    EVERYONE: '@everyone',
     MY_NEW_COMMAND: '@mycommand'  // Add your new command
 };
 ```
@@ -103,6 +112,7 @@ const MyNewCommand = require('./myNewCommand');
 
 initializeCommands() {
     this.commands.set(COMMANDS.AI, new AICommand());
+    this.commands.set(COMMANDS.EVERYONE, new EveryoneCommand());
     this.commands.set(COMMANDS.MY_NEW_COMMAND, new MyNewCommand()); // Add this line
 }
 ```
@@ -155,4 +165,10 @@ If you encounter any issues or have questions, please open an issue on GitHub.
 
 - Never commit your `.env` file or API keys
 - Keep your WhatsApp session secure
-- Regularly update dependencies for security patches 
+- Regularly update dependencies for security patches
+
+---
+
+## Disclaimer
+
+This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with WhatsApp or any of its subsidiaries or its affiliates. The official WhatsApp website can be found at [whatsapp.com](https://www.whatsapp.com/). "WhatsApp" as well as related names, marks, emblems and images are registered trademarks of their respective owners. Also it is not guaranteed you will not be blocked by using this method. WhatsApp does not allow bots or unofficial clients on their platform, so this shouldn't be considered totally safe. For any businesses looking to integrate with WhatsApp for critical applications, we highly recommend using officially supported methods, such as Twilio's solution or other alternatives. You might also consider the [official API](https://www.twilio.com/whatsapp) . 

@@ -1,5 +1,6 @@
 const AICommand = require('./aiCommand');
 const HelpCommand = require('./helpCommand');
+const EveryoneCommand = require('./everyoneCommand');
 const { COMMANDS } = require('../config/constants');
 
 class CommandManager {
@@ -11,8 +12,8 @@ class CommandManager {
     initializeCommands() {
         this.commands.set(COMMANDS.AI, new AICommand());
         this.commands.set(COMMANDS.HELP, new HelpCommand());
+        this.commands.set(COMMANDS.EVERYONE, new EveryoneCommand());
         // Add more commands here as needed
-        // this.commands.set(COMMANDS.EVERYONE, new EveryoneCommand());
     }
 
     async handleMessage(msg, client) {
